@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAM PAWAR · DIGITAL HERO</title>
+    <meta name="description" content="Ram Pawar — Java Full Stack & Backend Developer. Portfolio with AI Agent, IEEE publication, Spring Boot projects.">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800;900&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+/* ══════════════════════════════════════════
+   ROOT VARIABLES
+══════════════════════════════════════════ */
+:root {
+  --ink:       #0a0a0a;
+  --paper:     #fdf6e3;
+  --red:       #e82c2c;
+  --blue:      #1a6fff;
+  --yellow:    #ffd000;
+  --cyan:      #00d4f0;
+  --purple:    #8b2be2;
+  --green:     #00c060;
+  --white:     #ffffff;
+  --outline:   3px solid var(--ink);
+  --outline2:  4px solid var(--ink);
+  --shadow:    6px 6px 0px var(--ink);
+  --shadow-sm: 3px 3px 0px var(--ink);
+  --font-comic:'Bangers', cursive;
+  --font-body: 'Nunito', sans-serif;
+  --nav-h:     58px;
+}
+
+/* ══════════════════════════════════════════
+   RESET
+══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ══════════════════════════════════════════
+   HALFTONE PATTERNS
+══════════════════════════════════════════ */
+.dots-bg     { background-image: radial-gradient(circle, var(--ink)    1px,   transparent 1px);   background-size: 18px 18px; }
+.dots-yellow { background-image: radial-gradient(circle, var(--yellow) 2px,   transparent 2px);   background-size: 12px 12px; }
+.dots-blue   { background-image: radial-gradient(circle, var(--blue)   1.5px, transparent 1.5px); background-size: 16px 16px; }
+
+/* ══════════════════════════════════════════
+   TYPOGRAPHY
+══════════════════════════════════════════ */
+.action-word {
+  font-family: var(--font-comic);
+  letter-spacing: 3px;
+  display: inline-block;
+  -webkit-text-stroke: 2px var(--ink);
+  paint-order: stroke fill;
+  text-shadow: 4px 4px 0 var(--ink);
+}
+
+/* ══════════════════════════════════════════
+   SPEECH BUBBLES
+══════════════════════════════════════════ */
+.bubble {
+  position: relative;
+  background: var(--white);
+  border: var(--outline);
+  border-radius: 20px;
+  padding: 10px 16px;
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+.bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -18px; left: 24px;
+  width: 0; height: 0;
+  border-left: 10px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 18px solid var(--ink);
+}
+.bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -14px; left: 25px;
+  width: 0; height: 0;
+  border-left: 8px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 15px solid var(--white);
+  z-index: 1;
+}
+
+.bubble-thought {
+  position: relative;
+  background: var(--cyan);
+  border: var(--outline);
+  border-radius: 50px;
+  padding: 8px 16px;
+  font-weight: 800;
+  box-shadow: var(--shadow-sm);
+  display: inline-block;
+}
+.bubble-thought::after {
+  content: '• • •';
+  position: absolute;
+  bottom: -22px; left: 20px;
+  font-size: 16px; color: var(--ink); letter-spacing: 3px;
+}
+
+.bubble-shout {
+  display: inline-block;
+  background: var(--yellow);
+  clip-path: polygon(5% 0%,95% 0%,100% 5%,100% 95%,95% 100%,5% 100%,0% 95%,0% 5%);
+  padding: 10px 18px;
+  font-weight: 900;
+  font-family: var(--font-comic);
+  letter-spacing: 2px;
+  text-align: center;
+  font-size: 15px;
+}
+
+/* ══════════════════════════════════════════
+   COMIC BUTTONS
+══════════════════════════════════════════ */
+.comic-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-comic);
+  font-size: 18px; letter-spacing: 2px;
+  padding: 10px 26px;
+  border: var(--outline);
+  box-shadow: var(--shadow);
+  cursor: pointer; text-decoration: none;
+  transition: transform .1s ease, box-shadow .1s ease;
+  background: var(--yellow); color: var(--ink);
+  line-height: 1;
+}
+.comic-btn:hover  { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 var(--ink); }
+.comic-btn:active { transform: translate(3px, 3px);  box-shadow: 2px 2px 0 var(--ink); }
+.comic-btn.blue   { background: var(--blue);  color: var(--white); }
+.comic-btn.red    { background: var(--red);   color: var(--white); }
+.comic-btn.white  { background: var(--white); color: var(--ink);   }
+
+/* ══════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════ */
+#navbar {
+  position: fixed; top: 0; left: 0; width: 100%; z-index: 200;
+  background: var(--ink);
+  border-bottom: 4px solid var(--yellow);
+  padding: 0 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: var(--nav-h);
+}
+.nav-logo {
+  font-family: var(--font-comic);
+  font-size: 24px; letter-spacing: 3px;
+  color: var(--yellow);
+  text-shadow: 2px 2px 0 var(--red);
+  flex-shrink: 0;
+}
+.nav-links { display: flex; gap: 2px; }
+.nav-link {
+  font-family: var(--font-comic);
+  font-size: 15px; letter-spacing: 1.5px;
+  color: var(--white);
+  text-decoration: none;
+  padding: 5px 10px;
+  border: 2px solid transparent;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.nav-link:hover { color: var(--yellow); border-color: var(--yellow); }
+
+/* Hamburger (mobile) */
+#nav-toggle {
+  display: none;
+  background: none; border: none;
+  cursor: pointer; flex-direction: column;
+  gap: 5px; padding: 6px;
+}
+#nav-toggle span {
+  display: block; width: 24px; height: 3px;
+  background: var(--yellow); border-radius: 2px;
+  transition: all .25s;
+}
+#nav-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+#nav-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+#nav-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+#mobile-menu {
+  display: none;
+  position: fixed; top: var(--nav-h); left: 0; width: 100%;
+  background: var(--ink);
+  border-bottom: 4px solid var(--yellow);
+  z-index: 199;
+  flex-direction: column;
+  padding: 12px 0;
+}
+#mobile-menu.open { display: flex; }
+#mobile-menu a {
+  font-family: var(--font-comic);
+  font-size: 20px; letter-spacing: 2px;
+  color: var(--white);
+  text-decoration: none;
+  padding: 10px 28px;
+  border-left: 4px solid transparent;
+  transition: all .15s;
+}
+#mobile-menu a:hover { color: var(--yellow); border-color: var(--yellow); background: rgba(255,208,0,0.05); }
+
+/* ══════════════════════════════════════════
+   SCROLL OFFSET (account for fixed navbar)
+══════════════════════════════════════════ */
+section, #agent { scroll-margin-top: var(--nav-h); }
+
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+#hero {
+  min-height: 100vh;
+  padding-top: var(--nav-h);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+}
+.hero-left {
+  background: var(--red);
+  display: flex; flex-direction: column;
+  align-items: flex-start; justify-content: center;
+  padding: 60px 40px 80px 60px;
+  border-right: 5px solid var(--ink);
+  position: relative; overflow: hidden;
+}
+.hero-right {
+  background: var(--blue);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 60px 40px;
+  position: relative; overflow: hidden;
+}
+
+.hero-name {
+  font-family: var(--font-comic);
+  font-size: clamp(56px, 9vw, 120px);
+  line-height: 0.88;
+  color: var(--white);
+  text-shadow: 6px 6px 0 var(--ink), -2px -2px 0 var(--ink),
+               2px -2px 0 var(--ink), -2px 2px 0 var(--ink);
+  letter-spacing: 4px;
+  position: relative; z-index: 1;
+}
+.hero-sub {
+  font-family: var(--font-comic);
+  font-size: clamp(16px, 2.2vw, 26px);
+  color: var(--yellow);
+  letter-spacing: 3px;
+  text-shadow: 2px 2px 0 var(--ink);
+  margin-top: 14px;
+  position: relative; z-index: 1;
+}
+.hero-tagline {
+  position: relative; z-index: 1;
+  margin-top: 22px;
+  font-size: 15px; font-weight: 800;
+  color: var(--white);
+  max-width: 380px; line-height: 1.6;
+}
+.hero-badges {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  margin-top: 26px; position: relative; z-index: 1;
+}
+.hero-badge {
+  background: var(--yellow);
+  border: var(--outline);
+  padding: 5px 12px;
+  font-family: var(--font-comic);
+  font-size: 13px; letter-spacing: 1px;
+  box-shadow: var(--shadow-sm); color: var(--ink);
+}
+.hero-char {
+  width: 240px; height: 240px;
+  background: var(--yellow);
+  border-radius: 50%;
+  border: 5px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--ink);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 100px;
+  animation: heroFloat 3s ease-in-out infinite;
+  position: relative; z-index: 1;
+}
+@keyframes heroFloat {
+  0%,100% { transform: translateY(0)   rotate(-3deg); }
+  50%      { transform: translateY(-14px) rotate(3deg);  }
+}
+
+/* ══════════════════════════════════════════
+   SECTION HEADERS
+══════════════════════════════════════════ */
+.comic-section-header {
+  background: var(--ink);
+  padding: 10px 32px;
+  display: flex; align-items: center; gap: 14px;
+}
+.comic-section-header h2 {
+  font-family: var(--font-comic);
+  font-size: 34px; letter-spacing: 3px;
+  color: var(--white);
+}
+.section-num {
+  font-family: var(--font-comic);
+  font-size: 38px; color: var(--yellow);
+  text-shadow: 3px 3px 0 var(--red);
+}
+
+/* ══════════════════════════════════════════
+   ABOUT GRID  (3-col, 2-row → 5 panels)
+══════════════════════════════════════════ */
+#about { border-top: 5px solid var(--ink); }
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-left: var(--outline2);
+  border-top: var(--outline2);
+}
+.about-panel {
+  padding: 28px 24px;
+  border-right: var(--outline2);
+  border-bottom: var(--outline2);
+  background: var(--white);
+}
+.about-panel-accent { background: var(--yellow); }
+.about-panel-dark   { background: var(--ink); color: var(--white); }
+/* Wide panel spanning 2 columns */
+.about-panel-wide   { grid-column: span 2; }
+
+.stat-number {
+  font-family: var(--font-comic);
+  font-size: 60px; line-height: 1;
+  color: var(--red);
+  text-shadow: 4px 4px 0 var(--ink);
+}
+.stat-label {
+  font-size: 12px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 2px;
+  color: var(--ink); margin-top: 4px;
+}
+.about-panel-dark .stat-label { color: rgba(255,255,255,0.6); }
+
+/* ══════════════════════════════════════════
+   SKILLS
+══════════════════════════════════════════ */
+#skills { border-top: 5px solid var(--ink); }
+.skills-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-left: var(--outline2);
+  border-top: var(--outline2);
+}
+.skills-panel {
+  padding: 28px 24px;
+  border-right: var(--outline2);
+  border-bottom: var(--outline2);
+}
+.skills-panel-title {
+  font-family: var(--font-comic);
+  font-size: 20px; letter-spacing: 2px;
+  color: var(--ink); margin-bottom: 18px;
+  display: flex; align-items: center; gap: 8px;
+}
+
+/* Power bars */
+.power-bar-wrap { margin-bottom: 13px; }
+.power-bar-label {
+  display: flex; justify-content: space-between;
+  font-size: 12px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.power-bar-track {
+  height: 16px;
+  background: var(--paper);
+  border: 2.5px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  overflow: hidden;
+}
+.power-bar-fill {
+  height: 100%;
+  width: 0%;                           /* start at 0, animated via JS */
+  background: linear-gradient(90deg, var(--red), var(--yellow));
+  transition: width 1.2s cubic-bezier(0.65,0,0.35,1);
+}
+.power-bar-fill.blue   { background: linear-gradient(90deg, var(--blue),   var(--cyan));  }
+.power-bar-fill.green  { background: linear-gradient(90deg, var(--green),  var(--cyan));  }
+.power-bar-fill.purple { background: linear-gradient(90deg, var(--purple), var(--blue));  }
+
+/* Manga tags */
+.manga-tag {
+  display: inline-block;
+  font-size: 11.5px; font-weight: 800;
+  padding: 4px 9px; margin: 3px 2px;
+  border: 2.5px solid var(--ink);
+  background: var(--yellow);
+  box-shadow: 2px 2px 0 var(--ink);
+  text-transform: uppercase; letter-spacing: 1px;
+  transition: transform .1s;
+}
+.manga-tag:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--ink); }
+.manga-tag.blue  { background: var(--blue);   color: var(--white); }
+.manga-tag.red   { background: var(--red);    color: var(--white); }
+.manga-tag.cyan  { background: var(--cyan); }
+.manga-tag.green { background: var(--green);  color: var(--white); }
+.manga-tag.dark  { background: var(--ink);    color: var(--white); }
+
+/* ══════════════════════════════════════════
+   EXPERIENCE
+══════════════════════════════════════════ */
+#experience { border-top: 5px solid var(--ink); }
+.exp-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  border-top: var(--outline2);
+  min-height: 280px;
+}
+.exp-left {
+  background: var(--blue);
+  border-right: var(--outline2);
+  padding: 32px 24px;
+  position: relative; overflow: hidden;
+}
+.exp-right { padding: 32px 36px; background: var(--white); }
+
+.exp-mission-tag {
+  font-family: var(--font-comic);
+  font-size: 11px; letter-spacing: 3px;
+  background: var(--yellow); color: var(--ink);
+  border: 2px solid var(--ink);
+  padding: 3px 10px;
+  display: inline-block; margin-bottom: 14px;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+.exp-title {
+  font-family: var(--font-comic);
+  font-size: 26px; letter-spacing: 2px;
+  color: var(--white);
+  text-shadow: 3px 3px 0 var(--ink);
+  line-height: 1.1; margin-bottom: 8px;
+  position: relative; z-index: 1;
+}
+.exp-company {
+  font-family: var(--font-comic);
+  font-size: 19px; color: var(--yellow);
+  text-shadow: 2px 2px 0 var(--ink);
+  letter-spacing: 2px;
+  position: relative; z-index: 1;
+}
+.exp-duration {
+  font-size: 12px; font-weight: 800;
+  color: rgba(255,255,255,0.75);
+  margin-top: 10px; letter-spacing: 1px;
+  position: relative; z-index: 1;
+}
+.exp-resp-item {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 11px 0; border-bottom: 2px dashed rgba(0,0,0,0.1);
+  font-size: 13.5px; font-weight: 700; line-height: 1.5;
+}
+.exp-resp-item:last-child { border-bottom: none; }
+.exp-resp-num {
+  font-family: var(--font-comic);
+  font-size: 20px; color: var(--red);
+  text-shadow: 2px 2px 0 var(--ink);
+  flex-shrink: 0; min-width: 26px;
+}
+
+/* ══════════════════════════════════════════
+   PROJECTS
+══════════════════════════════════════════ */
+#projects { border-top: 5px solid var(--ink); }
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-left: var(--outline2);
+  border-top: var(--outline2);
+}
+.project-panel {
+  border-right: var(--outline2);
+  border-bottom: var(--outline2);
+  display: flex; flex-direction: column;
+}
+.project-header {
+  padding: 18px 22px;
+  border-bottom: 3px solid var(--ink);
+  display: flex; align-items: center; gap: 12px;
+}
+.project-icon {
+  width: 48px; height: 48px; border-radius: 50%;
+  border: 3px solid var(--ink);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.project-name {
+  font-family: var(--font-comic);
+  font-size: 18px; letter-spacing: 1.5px;
+  line-height: 1.15;
+}
+.project-body { padding: 18px 22px; background: var(--white); flex: 1; }
+.project-desc {
+  font-size: 13.5px; font-weight: 700; line-height: 1.6;
+  color: #333; margin-bottom: 14px;
+}
+.project-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
+.project-feat {
+  display: flex; gap: 8px; align-items: flex-start;
+  font-size: 13px; font-weight: 700; margin-bottom: 7px; line-height: 1.45;
+}
+.feat-bullet {
+  font-family: var(--font-comic);
+  font-size: 15px; color: var(--red);
+  flex-shrink: 0; line-height: 1.4;
+}
+.project-footer {
+  padding: 10px 22px;
+  border-top: 3px solid var(--ink);
+  font-family: var(--font-comic);
+  font-size: 12px; letter-spacing: 1.5px;
+}
+
+/* ══════════════════════════════════════════
+   EDUCATION
+══════════════════════════════════════════ */
+#education { border-top: 5px solid var(--ink); }
+.edu-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-left: var(--outline2);
+  border-top: var(--outline2);
+}
+.edu-panel {
+  padding: 32px 28px;
+  border-right: var(--outline2);
+  border-bottom: var(--outline2);
+}
+.edu-degree {
+  font-family: var(--font-comic);
+  font-size: 26px; letter-spacing: 2px;
+  color: var(--ink); line-height: 1.1; margin-bottom: 10px;
+}
+.edu-inst  { font-size: 13.5px; font-weight: 800; color: #444; margin-bottom: 4px; }
+.edu-meta  { font-size: 12.5px; font-weight: 700; color: #888; }
+.edu-cgpa  {
+  font-family: var(--font-comic);
+  font-size: 54px; color: var(--red);
+  text-shadow: 3px 3px 0 var(--ink);
+  display: block; margin-top: 14px;
+}
+.edu-cgpa-label {
+  font-size: 11px; font-weight: 800; color: var(--ink);
+  letter-spacing: 2px; text-transform: uppercase;
+}
+
+/* Achievement cards inside edu-panel-dark */
+.ach-card {
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(255,255,255,0.15);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+.ach-card:last-child { margin-bottom: 0; }
+.ach-title { font-family: var(--font-comic); font-size: 15px; letter-spacing: 1.5px; }
+.ach-sub   { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.65); margin-top: 4px; line-height: 1.5; }
+
+/* ══════════════════════════════════════════
+   AI AGENT SECTION
+══════════════════════════════════════════ */
+#agent { border-top: 5px solid var(--ink); }
+.agent-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  border-top: var(--outline2);
+  min-height: 620px;
+}
+
+/* Sidebar */
+.agent-sidebar {
+  background: var(--ink);
+  border-right: var(--outline2);
+  padding: 24px 18px;
+  display: flex; flex-direction: column; gap: 16px;
+  overflow-y: auto;
+}
+.agent-avatar-wrap {
+  display: flex; flex-direction: column; align-items: center;
+  padding-bottom: 18px;
+  border-bottom: 2px dashed rgba(255,255,255,0.15);
+}
+.agent-avatar {
+  width: 90px; height: 90px; border-radius: 50%;
+  background: var(--yellow);
+  border: 4px solid var(--yellow);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 44px;
+  box-shadow: 6px 6px 0 rgba(255,208,0,0.4), 0 0 0 5px var(--ink), 10px 10px 0 rgba(255,208,0,0.2);
+  animation: agentFloat 4s ease-in-out infinite;
+  margin-bottom: 12px;
+}
+@keyframes agentFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+.agent-name-tag {
+  font-family: var(--font-comic);
+  font-size: 20px; letter-spacing: 2px;
+  color: var(--yellow); text-align: center;
+  text-shadow: 2px 2px 0 var(--red);
+}
+.agent-status {
+  margin-top: 5px;
+  font-size: 11px; font-weight: 800;
+  color: var(--green); letter-spacing: 2px;
+  text-transform: uppercase; text-align: center;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.online-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  animation: glow 1.5s ease-in-out infinite;
+}
+@keyframes glow { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+.agent-info {
+  display: flex; gap: 9px; align-items: flex-start;
+}
+.agent-info-icon {
+  width: 26px; height: 26px; border-radius: 6px;
+  background: rgba(255,255,255,0.08);
+  border: 1.5px solid rgba(255,255,255,0.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; color: var(--yellow); flex-shrink: 0;
+}
+.agent-info-text { font-size: 11.5px; font-weight: 700; color: rgba(255,255,255,0.65); line-height: 1.45; }
+.agent-info-text strong { color: var(--white); }
+
+.quick-ask-title {
+  font-family: var(--font-comic);
+  font-size: 13px; letter-spacing: 2px;
+  color: var(--yellow); margin-bottom: 8px;
+  margin-top: auto; padding-top: 16px;
+  border-top: 2px dashed rgba(255,255,255,0.15);
+}
+.quick-btn {
+  display: block; width: 100%;
+  font-size: 12px; font-weight: 800;
+  padding: 7px 11px; margin-bottom: 5px;
+  background: rgba(255,255,255,0.05);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.7);
+  text-align: left; cursor: pointer; border-radius: 3px;
+  transition: all .15s;
+}
+.quick-btn:hover {
+  background: rgba(255,208,0,0.1);
+  border-color: var(--yellow); color: var(--yellow);
+}
+
+/* Chat panel */
+.agent-chat {
+  display: flex; flex-direction: column;
+  background: var(--paper);
+  max-height: 620px;
+}
+.chat-header {
+  background: var(--yellow);
+  border-bottom: 3px solid var(--ink);
+  padding: 12px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+}
+.chat-header-title {
+  font-family: var(--font-comic);
+  font-size: 18px; letter-spacing: 2px;
+}
+.chat-header-sub { font-size: 11.5px; font-weight: 800; color: #555; }
+.clear-btn {
+  font-family: var(--font-comic);
+  font-size: 13px; letter-spacing: 1.5px;
+  padding: 5px 13px;
+  background: var(--ink); color: var(--yellow);
+  border: 2px solid var(--ink); cursor: pointer;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+  transition: all .1s; white-space: nowrap;
+}
+.clear-btn:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 rgba(0,0,0,0.3); }
+
+/* Messages */
+#chat-messages {
+  flex: 1; overflow-y: auto;
+  padding: 16px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+#chat-messages::-webkit-scrollbar { width: 5px; }
+#chat-messages::-webkit-scrollbar-thumb { background: var(--ink); }
+
+.chat-msg {
+  display: flex; gap: 10px;
+  animation: msgPop .3s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes msgPop {
+  from { opacity:0; transform:scale(.88) translateY(8px); }
+  to   { opacity:1; transform:scale(1)   translateY(0);   }
+}
+.chat-msg.user-msg { flex-direction: row-reverse; }
+.chat-ava {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 3px solid var(--ink);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+.chat-ava.agent { background: var(--yellow); }
+.chat-ava.user  { background: var(--blue); color: var(--white); }
+.chat-bubble-wrap { display: flex; flex-direction: column; gap: 3px; max-width: 80%; }
+.chat-msg.user-msg .chat-bubble-wrap { align-items: flex-end; }
+.chat-sender {
+  font-size: 10.5px; font-weight: 900;
+  text-transform: uppercase; letter-spacing: 1.5px; color: var(--ink);
+}
+
+/* Comic speech bubble styling for chat messages */
+.chat-bubble {
+  background: var(--white);
+  border: 2.5px solid var(--ink);
+  border-radius: 4px 16px 16px 16px;
+  padding: 10px 14px;
+  font-size: 13px; font-weight: 600; line-height: 1.65;
+  color: var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  position: relative;
+  word-break: break-word;
+}
+.chat-msg.user-msg .chat-bubble {
+  background: var(--blue); color: var(--white);
+  border-radius: 16px 4px 16px 16px;
+}
+
+/* Rich content helpers inside .chat-bubble */
+.chat-bubble strong { font-weight: 900; }
+.chat-bubble em     { color: #555; font-style: normal; }
+
+.ctag {
+  display: inline-block;
+  font-size: 10.5px; font-weight: 800;
+  padding: 2px 7px; margin: 2px 1px;
+  border: 2px solid var(--ink);
+  background: var(--yellow);
+  box-shadow: 1px 1px 0 var(--ink);
+  text-transform: uppercase; letter-spacing: 0.4px;
+}
+.ctag.b { background: var(--blue);  color: var(--white); }
+.ctag.r { background: var(--red);   color: var(--white); }
+.ctag.g { background: var(--green); color: var(--white); }
+.ctag.c { background: var(--cyan); }
+.ctag.p { background: var(--purple); color: var(--white); }
+
+.ccard {
+  margin-top: 8px;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  padding: 9px 12px;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+.ccard .ccard-t { font-size: 12.5px; font-weight: 900; }
+.ccard .ccard-s { font-size: 12px; font-weight: 600; color: #444; margin-top: 3px; line-height: 1.5; }
+
+.clist { margin-top: 7px; list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.clist li { display: flex; gap: 7px; font-size: 12.5px; font-weight: 600; }
+.clist li::before { content: "▸"; color: var(--red); flex-shrink: 0; font-size: 13px; }
+
+/* Chat power bars */
+.cbar-wrap { margin: 5px 0; }
+.cbar-label { display: flex; justify-content: space-between; font-size: 11.5px; font-weight: 800; margin-bottom: 3px; }
+.cbar-track { height: 12px; background: var(--paper); border: 2px solid var(--ink); box-shadow: 1px 1px 0 var(--ink); overflow: hidden; }
+.cbar-fill  { height: 100%; width: 0%; background: linear-gradient(90deg, var(--red), var(--yellow)); transition: width 1s cubic-bezier(0.65,0,0.35,1); }
+
+/* Typing indicator */
+.typing-msg { display: flex; gap: 10px; }
+.typing-bubble {
+  background: var(--white); border: 2.5px solid var(--ink);
+  border-radius: 4px 16px 16px 16px;
+  padding: 12px 16px;
+  display: flex; align-items: center; gap: 6px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.tdot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--ink);
+  animation: tdots 1.2s ease-in-out infinite both;
+}
+.tdot:nth-child(2) { animation-delay: .2s; }
+.tdot:nth-child(3) { animation-delay: .4s; }
+@keyframes tdots {
+  0%,80%,100% { transform: scale(.5); background: rgba(0,0,0,0.25); }
+  40%          { transform: scale(1);  background: var(--red); }
+}
+
+/* Chips */
+.chips-row {
+  padding: 8px 16px;
+  display: flex; gap: 6px; flex-wrap: wrap;
+  flex-shrink: 0;
+  border-top: 2px dashed rgba(0,0,0,0.12);
+  background: rgba(253,246,227,0.8);
+}
+.cchip {
+  font-size: 11.5px; font-weight: 800;
+  padding: 5px 11px;
+  background: var(--white);
+  border: 2px solid var(--ink);
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: all .1s;
+  text-transform: uppercase; letter-spacing: .4px;
+}
+.cchip:hover {
+  background: var(--yellow);
+  transform: translate(-1px,-1px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+/* Input bar */
+.chat-input-wrap {
+  padding: 12px 16px;
+  border-top: 3px solid var(--ink);
+  background: var(--white);
+  display: flex; gap: 9px; flex-shrink: 0;
+}
+#chat-input {
+  flex: 1; padding: 9px 14px;
+  font-family: var(--font-body);
+  font-size: 14px; font-weight: 700;
+  border: 2.5px solid var(--ink);
+  background: var(--paper);
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+#chat-input:focus { border-color: var(--blue); box-shadow: 3px 3px 0 var(--blue); }
+#chat-input::placeholder { color: #aaa; font-weight: 600; }
+.send-btn {
+  font-family: var(--font-comic);
+  font-size: 15px; letter-spacing: 1.5px;
+  padding: 9px 18px;
+  background: var(--red); color: var(--white);
+  border: 2.5px solid var(--ink);
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: all .1s; white-space: nowrap;
+}
+.send-btn:hover  { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--ink); }
+.send-btn:active { transform: translate(2px,2px);   box-shadow: 1px 1px 0 var(--ink); }
+.send-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: 2px 2px 0 var(--ink); }
+
+/* ══════════════════════════════════════════
+   CONTACT
+══════════════════════════════════════════ */
+#contact {
+  background: var(--ink);
+  border-top: 5px solid var(--yellow);
+  padding: 60px 32px 48px;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+
+/* ══════════════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════════════ */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .55s ease, transform .55s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 860px) {
+  #hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .hero-left  { padding: 50px 28px 70px; }
+
+  .about-grid     { grid-template-columns: 1fr 1fr; }
+  .about-panel-wide { grid-column: span 2; }
+
+  .skills-layout  { grid-template-columns: 1fr; }
+  .projects-grid  { grid-template-columns: 1fr; }
+  .edu-layout     { grid-template-columns: 1fr; }
+  .exp-layout     { grid-template-columns: 1fr; }
+  .agent-layout   { grid-template-columns: 1fr; }
+  .agent-sidebar  { max-height: 340px; }
+  .agent-chat     { max-height: 480px; }
+
+  .nav-links { display: none; }
+  #nav-toggle { display: flex; }
+
+  .comic-section-header { padding: 10px 20px; }
+  .comic-section-header h2 { font-size: 26px; }
+}
+
+@media (max-width: 480px) {
+  .hero-name { font-size: 52px; }
+  .about-grid { grid-template-columns: 1fr; }
+  .about-panel-wide { grid-column: span 1; }
+}
+    </style>
+</head>
+<body>
+
+<!-- ═══════ NAVBAR ═══════ -->
+<nav id="navbar">
+  <div class="nav-logo">★ RAM PAWAR ★</div>
+  <div class="nav-links">
+    <a href="#about"      class="nav-link">ABOUT</a>
+    <a href="#skills"     class="nav-link">POWERS</a>
+    <a href="#experience" class="nav-link">MISSIONS</a>
+    <a href="#projects"   class="nav-link">BUILDS</a>
+    <a href="#education"  class="nav-link">TRAINING</a>
+    <a href="#agent"      class="nav-link">ASK AI</a>
+    <a href="#contact"    class="nav-link">CONTACT</a>
+  </div>
+  <button id="nav-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile menu -->
+<div id="mobile-menu">
+  <a href="#about"      onclick="closeMenu()">ABOUT</a>
+  <a href="#skills"     onclick="closeMenu()">POWERS</a>
+  <a href="#experience" onclick="closeMenu()">MISSIONS</a>
+  <a href="#projects"   onclick="closeMenu()">BUILDS</a>
+  <a href="#education"  onclick="closeMenu()">TRAINING</a>
+  <a href="#agent"      onclick="closeMenu()">ASK AI</a>
+  <a href="#contact"    onclick="closeMenu()">CONTACT</a>
+</div>
+
+<!-- ═══════ HERO ═══════ -->
+<section id="hero">
+  <!-- LEFT: Red panel -->
+  <div class="hero-left">
+    <div class="dots-bg" style="position:absolute;inset:0;opacity:.1;pointer-events:none;"></div>
+    <div class="hero-name">RAM<br>PAWAR</div>
+    <div class="hero-sub">JAVA · SPRING BOOT · BACKEND</div>
+    <p class="hero-tagline">Computer Engineer on a mission to architect scalable, secure, and blazing-fast backend systems. Armed with Java &amp; Spring Boot — no bug survives.</p>
+    <div class="hero-badges">
+      <span class="hero-badge">☁️ NASSCOM GOLD</span>
+      <span class="hero-badge">📄 IEEE PUBLISHED</span>
+      <span class="hero-badge">🎓 B.TECH 2026</span>
+    </div>
+    <div style="display:flex;gap:12px;margin-top:26px;flex-wrap:wrap;">
+      <a href="#agent"   class="comic-btn"><i class="fas fa-robot"></i> ASK AI</a>
+      <a href="https://github.com/Rampawardz" target="_blank" rel="noopener" class="comic-btn blue"><i class="fab fa-github"></i> GITHUB</a>
+      <a href="mailto:rampawarpkd@gmail.com" class="comic-btn red"><i class="fas fa-envelope"></i> HIRE ME</a>
+    </div>
+  </div>
+
+  <!-- RIGHT: Blue panel -->
+  <div class="hero-right">
+    <div class="dots-yellow" style="position:absolute;inset:0;opacity:.1;pointer-events:none;"></div>
+    <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:20px;">
+      <div class="hero-char">💻</div>
+      <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;justify-content:center;">
+        <div class="action-word" style="font-size:44px;color:var(--yellow);transform:rotate(-12deg);">JAVA!</div>
+        <div class="action-word" style="font-size:32px;color:var(--white);transform:rotate(6deg);">SPRING!</div>
+        <div class="action-word" style="font-size:38px;color:var(--cyan);transform:rotate(-5deg);">SQL!</div>
+      </div>
+      <div class="bubble" style="max-width:320px;width:100%;font-size:13px;margin-top:10px;">
+        📧 rampawarpkd@gmail.com<br>
+        📞 +91 9209295876<br>
+        📍 Pune, Maharashtra, India
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ ABOUT ═══════ -->
+<section id="about">
+  <div class="comic-section-header reveal">
+    <span class="section-num">#01</span>
+    <h2>ORIGIN STORY</h2>
+  </div>
+  <div class="about-grid">
+    <!-- Panel 1: Bio -->
+    <div class="about-panel reveal">
+      <div class="bubble-thought" style="margin-bottom:18px;font-size:12.5px;">🎓 B.Tech Computer Engineering</div>
+      <p style="font-size:13.5px;font-weight:700;line-height:1.7;color:#333;">
+        Java Full Stack engineer and Computer Engineering graduate from JSPM's Rajarshi Shahu College of Engineering, Pune (2022–2026). Fuelled by a passion for building robust, scalable backend architectures that power real-world products.
+      </p>
+    </div>
+    <!-- Panel 2: Stats -->
+    <div class="about-panel about-panel-accent reveal">
+      <div class="stat-number">7.53</div>
+      <div class="stat-label">CGPA / 10.0</div>
+      <div style="height:18px;"></div>
+      <div class="stat-number" style="color:var(--blue);">2+</div>
+      <div class="stat-label">PRODUCTION PROJECTS</div>
+    </div>
+    <!-- Panel 3: More stats -->
+    <div class="about-panel reveal">
+      <div class="stat-number" style="color:var(--purple);">6</div>
+      <div class="stat-label">MONTHS Java Full-Stack Trainee @ KIRAN ACADEMY</div>
+      <div style="height:18px;"></div>
+      <div class="stat-number" style="font-size:44px;color:var(--green);">IEEE</div>
+      <div class="stat-label">PUBLISHED RESEARCHER</div>
+    </div>
+    <!-- Panel 4 (spans 2 cols): Mission + Contact -->
+    <div class="about-panel about-panel-wide reveal">
+      <div style="display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap;">
+        <div style="flex:1;min-width:200px;">
+          <div class="bubble-shout" style="margin-bottom:12px;">🎯 MISSION STATEMENT</div>
+          <p style="font-size:13.5px;font-weight:700;line-height:1.7;color:#333;margin-top:10px;">
+            To architect scalable, secure, and high-performance digital infrastructure. Core expertise spans Java 17, Spring Boot, Hibernate ORM, MySQL 8, Spring Security, and REST API design. Deeply calibrated in MVC, ACID transactions, and OOP principles.
+          </p>
+        </div>
+        <div style="flex:1;min-width:200px;">
+          <div class="bubble-shout" style="margin-bottom:12px;background:var(--cyan);">📬 CONTACT</div>
+          <div style="font-size:13px;font-weight:700;line-height:2.1;margin-top:10px;">
+            📧 <a href="mailto:rampawarpkd@gmail.com" style="color:var(--blue);">rampawarpkd@gmail.com</a><br>
+            📞 +91 9209295876<br>
+            🔗 <a href="https://linkedin.com/in/ramvijaypawar" target="_blank" rel="noopener" style="color:var(--blue);">linkedin.com/in/ramvijaypawar</a><br>
+            💻 <a href="https://github.com/Rampawardz" target="_blank" rel="noopener" style="color:var(--blue);">github.com/Rampawardz</a><br>
+            🌐 <a href="https://orcid.org/0009-0002-4204-9024" target="_blank" rel="noopener" style="color:var(--blue);">orcid.org/0009-0002-4204-9024</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Panel 5: Status -->
+    <div class="about-panel about-panel-dark reveal">
+      <div style="font-family:var(--font-comic);font-size:16px;letter-spacing:2px;color:var(--yellow);margin-bottom:10px;">CURRENT STATUS</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <span class="manga-tag green">✅ OPEN TO HIRE</span>
+        <span class="manga-tag">🏠 PUNE, INDIA</span>
+        <span class="manga-tag blue">🌐 REMOTE READY</span>
+        <span class="manga-tag dark"">🎓 JUN 2026</span>
+      </div>
+      <div style="margin-top:14px;font-size:13px;font-weight:700;color:rgba(255,255,255,0.65);line-height:1.5;">
+        Seeking Java Backend / Full Stack roles. Available immediately.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SKILLS ═══════ -->
+<section id="skills">
+  <div class="comic-section-header reveal">
+    <span class="section-num" style="color:var(--cyan);">#02</span>
+    <h2>POWER LEVELS</h2>
+    <div class="action-word" style="font-size:24px;color:var(--yellow);margin-left:10px;">MAXED!</div>
+  </div>
+  <div class="skills-layout">
+    <!-- Backend -->
+    <div class="skills-panel reveal">
+      <div class="skills-panel-title"><i class="fas fa-server" style="color:var(--red);"></i> BACKEND ARSENAL</div>
+      <div class="power-bar-wrap"><div class="power-bar-label"><span>Java 17</span><span>90%</span></div><div class="power-bar-track"><div class="power-bar-fill" data-w="90"></div></div></div>
+      <div class="power-bar-wrap"><div class="power-bar-label"><span>Spring Boot</span><span>85%</span></div><div class="power-bar-track"><div class="power-bar-fill" data-w="85"></div></div></div>
+      <div class="power-bar-wrap"><div class="power-bar-label"><span>Hibernate ORM</span><span>80%</span></div><div class="power-bar-track"><div class="power-bar-fill" data-w="80"></div></div></div>
+      <div class="power-bar-wrap"><div class="power-bar-label"><span>REST API Design</span><span>85%</span></div><div class="power-bar-track"><div class="power-bar-fill" data-w="85"></div></div></div>
+      <div class="power-bar-wrap"><div class="power-bar-label"><span>JDBC / Servlet API</span><span>78%</span></div><div class="power-bar-track"><div class="power-bar-fill" data-w="78"></div></div></div>
+      <div style="margin-top:14px;">
+        <span class="manga-tag red">MVC</span>
+        <span class="manga-tag red">Spring Data JPA</span>
+        <span class="manga-tag red">Spring MVC</span>
+      </div>
+    </div>
+    <!-- Database -->
+    <div class="skills-panel reveal">
+      <div class="skills-panel-title"><i class="fas fa-database" style="color:var(--blue);"></i> DATABASE MASTERY</div>
+      <div class="power-bar-wrap"><div class="power-bar-label"><span>MySQL 8</span><span>85%</span></div><div class="power-bar-track"><div class="power-bar-fill blue" data-w="85"></div></div></div>
+      <div class="power-bar-wrap"><div class="power-bar-label"><span>SQL / Query Optimisation</span><span>82%</span></div><div class="power-bar-track"><div class="power-bar-fill blue" data-w="82"></div></div></div>
+      <div class="power-bar-wrap"><div class="power-bar-label"><span>DB Normalisation (3NF)</span><span>80%</span></div><div class="power-bar-track"><div class="power-bar-fill blue" data-w="80"></div></div></div>
+      <div class="power-bar-wrap"><div class="power-bar-label"><span>ACID Transactions</span><span>78%</span></div><div class="power-bar-track"><div class="power-bar-fill blue" data-w="78"></div></div></div>
+      <div style="margin-top:14px;">
+        <span class="manga-tag blue">Relational Design</span>
+        <span class="manga-tag blue">Indexing</span>
+        <span class="manga-tag blue">Joins</span>
+      </div>
+    </div>
+    <!-- Security -->
+    <div class="skills-panel reveal">
+      <div class="skills-panel-title"><i class="fas fa-shield-alt" style="color:var(--green);"></i> SECURITY SPELLS</div>
+      <div class="power-bar-wrap"><div class="power-bar-label"><span>Spring Security</span><span>75%</span></div><div class="power-bar-track"><div class="power-bar-fill green" data-w="75"></div></div></div>
+      <div class="power-bar-wrap"><div class="power-bar-label"><span>BCrypt / PBKDF2</span><span>78%</span></div><div class="power-bar-track"><div class="power-bar-fill green" data-w="78"></div></div></div>
+      <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:6px;">
+        <span class="manga-tag green">Spring Security</span>
+        <span class="manga-tag green">BCrypt</span>
+        <span class="manga-tag green">PBKDF2</span>
+        <span class="manga-tag green">RBAC</span>
+        <span class="manga-tag green">HMAC-SHA256</span>
+        <span class="manga-tag green">SQL Injection Prevention</span>
+        <span class="manga-tag green">JWT Concepts</span>
+      </div>
+    </div>
+    <!-- DevOps & Frontend -->
+    <div class="skills-panel reveal">
+      <div class="skills-panel-title"><i class="fas fa-code-branch" style="color:var(--purple);"></i> DEVOPS &amp; FRONTEND</div>
+      <div class="power-bar-wrap"><div class="power-bar-label"><span>Git &amp; GitHub</span><span>88%</span></div><div class="power-bar-track"><div class="power-bar-fill purple" data-w="88"></div></div></div>
+      <div class="power-bar-wrap"><div class="power-bar-label"><span>React.js</span><span>70%</span></div><div class="power-bar-track"><div class="power-bar-fill purple" data-w="70"></div></div></div>
+      <div class="power-bar-wrap"><div class="power-bar-label"><span>AWS / Azure</span><span>72%</span></div><div class="power-bar-track"><div class="power-bar-fill purple" data-w="72"></div></div></div>
+      <div class="power-bar-wrap"><div class="power-bar-label"><span>Docker</span><span>65%</span></div><div class="power-bar-track"><div class="power-bar-fill purple" data-w="65"></div></div></div>
+      <div style="margin-top:14px;">
+        <span class="manga-tag dark">Maven</span>
+        <span class="manga-tag dark">Postman</span>
+        <span class="manga-tag dark">Linux</span>
+        <span class="manga-tag dark">JavaScript</span>
+        <span class="manga-tag dark">HTML5/CSS3</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ EXPERIENCE ═══════ -->
+<section id="experience">
+  <div class="comic-section-header reveal">
+    <span class="section-num" style="color:var(--red);">#03</span>
+    <h2>BATTLE LOG</h2>
+  </div>
+  <div class="exp-layout">
+    <div class="exp-left reveal">
+      <div class="dots-yellow" style="position:absolute;inset:0;opacity:.1;pointer-events:none;"></div>
+      <div style="position:relative;z-index:1;">
+        <div class="exp-mission-tag">MISSION: ACTIVE</div>
+        <div class="exp-title">JAVA FULL STACK<br>TRAINEE DEV</div>
+        <div class="exp-company">KIRAN ACADEMY</div>
+        <div class="exp-duration">📍 PUNE · DEC 2025 – JUN 2026 · 7 MONTHS</div>
+        <div style="margin-top:20px;">
+          <div class="bubble" style="font-size:12px;max-width:240px;background:var(--yellow);border-color:var(--ink);">
+            ⚡ Full-time industrial training program
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="exp-right reveal">
+      <div style="font-family:var(--font-comic);font-size:18px;letter-spacing:2px;margin-bottom:16px;color:var(--ink);">MISSION OBJECTIVES COMPLETED:</div>
+      <div class="exp-resp-item"><div class="exp-resp-num">01</div><div>Designed and built RESTful APIs using Java and Spring Boot to support core features of an industrial-grade project.</div></div>
+      <div class="exp-resp-item"><div class="exp-resp-num">02</div><div>Created database schemas and implemented CRUD operations using Hibernate ORM with MySQL for efficient, normalised data management.</div></div>
+      <div class="exp-resp-item"><div class="exp-resp-num">03</div><div>Integrated the Spring Boot backend with a React.js frontend interface for seamless end-to-end data processing and display.</div></div>
+      <div class="exp-resp-item"><div class="exp-resp-num">04</div><div>Managed code versions using Git and handled all project dependencies with Maven across 7 months of iterative development.</div></div>
+      <div class="exp-resp-item"><div class="exp-resp-num">05</div><div>Debugged and optimised API endpoints to ensure performance and reliability under concurrent load.</div></div>
+      <div class="exp-resp-item"><div class="exp-resp-num">06</div><div>Applied agile-style iterative development and collaborated with team members on feature planning and code reviews.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PROJECTS ═══════ -->
+<section id="projects">
+  <div class="comic-section-header reveal">
+    <span class="section-num" style="color:var(--cyan);">#04</span>
+    <h2>EPIC BUILDS</h2>
+    <div class="action-word" style="font-size:24px;color:var(--red);margin-left:10px;">POW!</div>
+  </div>
+  <div class="projects-grid">
+    <!-- Project 1 -->
+    <div class="project-panel reveal">
+      <div class="project-header" style="background:var(--red);">
+        <div class="project-icon" style="background:var(--yellow);">🛡️</div>
+        <div>
+          <div class="project-name" style="color:var(--white);text-shadow:2px 2px 0 var(--ink);">FAKE PROFILE<br>ID &amp; REPORTING</div>
+          <div style="font-size:10.5px;font-weight:800;color:rgba(255,255,255,0.7);margin-top:2px;letter-spacing:1px;">OCT 2025 – DEC 2025 · FULL STACK + ML</div>
+        </div>
+      </div>
+      <div class="project-body">
+        <p class="project-desc">
+          Detects and reports fake social media profiles using a Machine Learning model integrated directly into a Spring Boot backend. Secured with Spring Security, BCrypt, and role-based access control. Validated by IEEE and protected by Indian Copyright.
+        </p>
+        <div class="project-tags">
+          <span class="manga-tag red">Java</span>
+          <span class="manga-tag red">Spring Boot</span>
+          <span class="manga-tag blue">MySQL</span>
+          <span class="manga-tag">Hibernate</span>
+          <span class="manga-tag cyan">React.js</span>
+          <span class="manga-tag green">Python (ML)</span>
+        </div>
+        <div class="project-feat"><div class="feat-bullet">▸</div><div>Scalable REST API with strict MVC: Controller → Service → Repository layering.</div></div>
+        <div class="project-feat"><div class="feat-bullet">▸</div><div>Python Random Forest model invoked in real-time via Java <strong>ProcessBuilder</strong>.</div></div>
+        <div class="project-feat"><div class="feat-bullet">▸</div><div>Spring Security + BCrypt for user auth and secure role-based routing.</div></div>
+        <div class="project-feat"><div class="feat-bullet">▸</div><div>React.js admin dashboard for reviewing and managing flagged profiles.</div></div>
+        <div class="project-feat"><div class="feat-bullet">▸</div><div>Normalised MySQL DB with efficient indexing and foreign key constraints.</div></div>
+      </div>
+      <div class="project-footer" style="background:var(--yellow);">
+        🏆 IEEE I2ITCON 2025 PUBLISHED · INDIAN COPYRIGHT
+      </div>
+    </div>
+    <!-- Project 2 -->
+    <div class="project-panel reveal">
+      <div class="project-header" style="background:var(--blue);">
+        <div class="project-icon" style="background:var(--cyan);">📚</div>
+        <div>
+          <div class="project-name" style="color:var(--white);text-shadow:2px 2px 0 var(--ink);">ONLINE BOOKSTORE<br>ENGINE</div>
+          <div style="font-size:10.5px;font-weight:800;color:rgba(255,255,255,0.7);margin-top:2px;letter-spacing:1px;">MAR 2026 – MAY 2026 · FRAMEWORK-LESS E-COMMERCE</div>
+        </div>
+      </div>
+      <div class="project-body">
+        <p class="project-desc">
+          Production-grade e-commerce platform built from scratch using Core Java 17, Servlet API, and raw JDBC — no Spring framework. Proves deep understanding of Java fundamentals with Razorpay payment integration and PBKDF2 security.
+        </p>
+        <div class="project-tags">
+          <span class="manga-tag red">Java 17</span>
+          <span class="manga-tag blue">Servlet API</span>
+          <span class="manga-tag blue">JDBC</span>
+          <span class="manga-tag blue">MySQL 8</span>
+          <span class="manga-tag dark">Vanilla JS</span>
+          <span class="manga-tag cyan">Razorpay</span>
+        </div>
+        <div class="project-feat"><div class="feat-bullet">▸</div><div>Entire backend in Core Java 17 + Servlets — NO Spring/ORM frameworks used.</div></div>
+        <div class="project-feat"><div class="feat-bullet">▸</div><div>Normalised MySQL 8 DB with foreign keys, cascades, and ACID-compliant transaction management.</div></div>
+        <div class="project-feat"><div class="feat-bullet">▸</div><div>PBKDF2-HMAC-SHA256 password hashing — stronger than BCrypt in raw Java environments.</div></div>
+        <div class="project-feat"><div class="feat-bullet">▸</div><div>SQL Injection prevented via 100% PreparedStatements throughout the app.</div></div>
+        <div class="project-feat"><div class="feat-bullet">▸</div><div>Razorpay payment gateway + HMAC-SHA256 signature verification on callbacks.</div></div>
+      </div>
+      <div class="project-footer" style="background:var(--cyan);">
+        💳 RAZORPAY INTEGRATED · RBAC FILTERS · FULL ORDER LIFECYCLE
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ EDUCATION ═══════ -->
+<section id="education">
+  <div class="comic-section-header reveal">
+    <span class="section-num" style="color:var(--yellow);">#05</span>
+    <h2>TRAINING ARC</h2>
+  </div>
+  <div class="edu-layout">
+    <!-- Left: degree -->
+    <div class="edu-panel reveal" style="background:var(--paper);">
+      <div class="edu-degree">B.TECH IN COMPUTER ENGINEERING</div>
+      <div class="edu-inst">JSPM's Rajarshi Shahu College of Engineering, Pune</div>
+      <div class="edu-meta">Savitribai Phule Pune University · Nov 2022 – Jun 2026</div>
+      <span class="edu-cgpa">7.53</span>
+      <div class="edu-cgpa-label">CGPA / 10.0</div>
+      <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:6px;">
+        <span class="manga-tag">OOP</span>
+        <span class="manga-tag">Data Structures</span>
+        <span class="manga-tag">DBMS</span>
+        <span class="manga-tag">OS</span>
+        <span class="manga-tag">Computer Networks</span>
+        <span class="manga-tag">Software Engineering</span>
+      </div>
+    </div>
+    <!-- Right: honors -->
+    <div class="edu-panel reveal" style="background:var(--ink);">
+      <div style="font-family:var(--font-comic);font-size:20px;letter-spacing:2px;color:var(--yellow);margin-bottom:18px;">UNLOCKED ACHIEVEMENTS</div>
+      <div class="ach-card">
+        <div class="ach-title" style="color:var(--yellow);">📜 IEEE PUBLICATION</div>
+        <div class="ach-sub">Fake Profile Identification &amp; Reporting<br>IEEE I2ITCON, Pune · Jun 2025 · Peer-reviewed</div>
+        <span class="manga-tag red" style="margin-top:8px;display:inline-block;font-size:10px;">PEER-REVIEWED</span>
+        <span class="manga-tag" style="margin-top:8px;display:inline-block;font-size:10px;">INDIAN COPYRIGHT</span>
+      </div>
+      <div class="ach-card">
+        <div class="ach-title" style="color:var(--cyan);">☁️ NASSCOM CLOUD CERT</div>
+        <div class="ach-sub">Cloud Computing Eng. (Azure / AWS)<br>Gold Category · Score: 97.00% · Jun 2026</div>
+        <span class="manga-tag green" style="margin-top:8px;display:inline-block;font-size:10px;">GOLD RANK</span>
+      </div>
+      <div class="ach-card">
+        <div class="ach-title" style="color:var(--yellow);">☕ IIT BOMBAY JAVA CERT</div>
+        <div class="ach-sub">Java Programming · Spoken Tutorial<br>Distinction · Score: 82.50% · Feb 2024</div>
+        <span class="manga-tag blue" style="margin-top:8px;display:inline-block;font-size:10px;">DISTINCTION</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ AI AGENT ═══════ -->
+<section id="agent">
+  <div class="comic-section-header reveal">
+    <span class="section-num" style="color:var(--green);">#06</span>
+    <h2>AI SIDEKICK</h2>
+    <div class="action-word" style="font-size:22px;color:var(--cyan);margin-left:10px;">ASK ME!</div>
+  </div>
+  <div class="agent-layout">
+    <!-- Sidebar -->
+    <div class="agent-sidebar">
+      <div class="agent-avatar-wrap">
+        <div class="agent-avatar">🤖</div>
+        <div class="agent-name-tag">RAM-AGENT</div>
+        <div class="agent-status"><div class="online-dot"></div> ONLINE · TRAINED v3</div>
+      </div>
+      <div class="agent-info">
+        <div class="agent-info-icon"><i class="fas fa-brain"></i></div>
+        <div class="agent-info-text"><strong>Knowledge:</strong> Full resume<br>25+ topic categories</div>
+      </div>
+      <div class="agent-info">
+        <div class="agent-info-icon"><i class="fas fa-bolt"></i></div>
+        <div class="agent-info-text"><strong>Response:</strong> Real-time<br>Rich formatted output</div>
+      </div>
+      <div class="agent-info">
+        <div class="agent-info-icon"><i class="fas fa-crosshairs"></i></div>
+        <div class="agent-info-text"><strong>Accuracy:</strong> Intent-scored<br>NLP matcher</div>
+      </div>
+
+      <!-- <div class="quick-ask-title">⚡ QUICK ATTACKS</div>
+      <button class="quick-btn" onclick="chipQ(this)">What are his skills?</button>
+      <button class="quick-btn" onclick="chipQ(this)">Tell me about the bookstore project</button>
+      <button class="quick-btn" onclick="chipQ(this)">How did he integrate ML with Java?</button>
+      <button class="quick-btn" onclick="chipQ(this)">What security did he use?</button>
+      <button class="quick-btn" onclick="chipQ(this)">Is he available to hire?</button>
+      <button class="quick-btn" onclick="chipQ(this)">What are his certifications?</button>
+      <button class="quick-btn" onclick="chipQ(this)">Tell me about the IEEE paper</button>
+      <button class="quick-btn" onclick="chipQ(this)">Show skill power levels</button>
+      <button class="quick-btn" onclick="chipQ(this)">What projects has he built?</button> -->
+    </div>
+
+    <!-- Chat Area -->
+    <div class="agent-chat">
+      <div class="chat-header">
+        <div>
+          <div class="chat-header-title">💬 MISSION BRIEFING ROOM</div>
+          <div class="chat-header-sub">Ask Ram's AI sidekick anything — powered by full resume knowledge</div>
+        </div>
+        <button class="clear-btn" onclick="clearChat()">↺ RESET</button>
+      </div>
+
+      <div id="chat-messages"></div>
+
+      <div class="chips-row" id="chips-row">
+        <div class="cchip" onclick="chipQ(this)">Core Skills</div>
+        <div class="cchip" onclick="chipQ(this)">Both Projects</div>
+        <div class="cchip" onclick="chipQ(this)">ML Integration</div>
+        <div class="cchip" onclick="chipQ(this)">Security Details</div>
+        <div class="cchip" onclick="chipQ(this)">Open To Hire?</div>
+        <div class="cchip" onclick="chipQ(this)">DevOps Skills</div>
+        <div class="cchip" onclick="chipQ(this)">Skill Power Levels</div>
+      </div>
+
+      <div class="chat-input-wrap">
+        <input type="text" id="chat-input" placeholder="Ask anything about Ram… (e.g. 'How did he integrate machine learning?')" autocomplete="off" spellcheck="false">
+        <button class="send-btn" id="send-btn" onclick="handleSend()">
+          <i class="fas fa-paper-plane"></i> SEND
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CONTACT ═══════ -->
+<section id="contact">
+  <div class="dots-yellow" style="position:absolute;inset:0;opacity:.06;pointer-events:none;"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="action-word" style="font-size:clamp(36px,8vw,90px);color:var(--yellow);display:block;text-align:center;margin-bottom:14px;">
+      LET'S TEAM UP!
+    </div>
+    <p style="color:rgba(255,255,255,0.75);font-size:15px;font-weight:700;max-width:480px;margin:0 auto 32px;text-align:center;line-height:1.6;">
+      Looking for a Java Backend Developer ready to ship production-grade systems from day one? Ram is actively seeking his next mission.
+    </p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <a href="mailto:rampawarpkd@gmail.com" class="comic-btn"><i class="fas fa-envelope"></i> EMAIL NOW</a>
+      <a href="https://linkedin.com/in/ramvijaypawar" target="_blank" rel="noopener" class="comic-btn blue"><i class="fab fa-linkedin"></i> LINKEDIN</a>
+      <a href="https://github.com/Rampawardz" target="_blank" rel="noopener" class="comic-btn white"><i class="fab fa-github"></i> GITHUB</a>
+    </div>
+    <div style="margin-top:36px;padding-top:24px;border-top:2px dashed rgba(255,255,255,0.12);text-align:center;">
+      <div style="font-family:var(--font-comic);font-size:13px;letter-spacing:3px;color:rgba(255,255,255,0.25);">
+        © 2026 RAM PAWAR · JAVA ENGINEER · PUNE, INDIA
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════ -->
+<script>
+'use strict';
+
+/* ─── Mobile Nav ─── */
+function toggleMenu() {
+  document.getElementById('nav-toggle').classList.toggle('open');
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('nav-toggle').classList.remove('open');
+  document.getElementById('mobile-menu').classList.remove('open');
+}
+// Close menu on outside click
+document.addEventListener('click', function(e) {
+  const nav = document.getElementById('navbar');
+  const menu = document.getElementById('mobile-menu');
+  if (!nav.contains(e.target) && !menu.contains(e.target)) closeMenu();
+});
+
+/* ─── Helpers ─── */
+function ctag(t, c) { return '<span class="ctag ' + (c||'') + '">' + t + '</span>'; }
+function clist(items) {
+  return '<ul class="clist">' + items.map(function(i){ return '<li>' + i + '</li>'; }).join('') + '</ul>';
+}
+function ccard(t, s) {
+  return '<div class="ccard"><div class="ccard-t">' + t + '</div><div class="ccard-s">' + s + '</div></div>';
+}
+function cbar(name, pct) {
+  return '<div class="cbar-wrap">' +
+    '<div class="cbar-label"><span>' + name + '</span><span>' + pct + '%</span></div>' +
+    '<div class="cbar-track"><div class="cbar-fill" data-w="' + pct + '"></div></div>' +
+  '</div>';
+}
+function getTime() {
+  return new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+}
+
+/* ─── Knowledge Base & Response Functions ─── */
+var I = {
+  greeting: function() {
+    return '👋 YO! I\'m <strong>Ram-Agent</strong> — Ram Pawar\'s AI sidekick!<br><br>' +
+      'I\'ve been fully trained on his <strong>complete portfolio</strong> including every project, skill, certification, and experience.<br><br>' +
+      'Try asking me:' +
+      clist(['What tech does he use?','How did he integrate ML with Java?','What security does he use?','Is he open to hire?','Tell me about the bookstore project','What are his certifications?']);
+  },
+
+  skills: function() {
+    return 'Ram\'s <strong>full technical arsenal</strong> across 5 domains:<br><br>' +
+      '<strong>⚙️ Backend &amp; APIs:</strong><br>' +
+      ['Java 17','Spring Boot','Spring MVC','Spring Data JPA','Hibernate ORM','REST APIs','JDBC','Servlet API'].map(function(t){return ctag(t,'r');}).join('') + '<br><br>' +
+      '<strong>🗄️ Database:</strong><br>' +
+      ['MySQL 8','SQL','ACID Transactions','DB Normalisation','Relational Design'].map(function(t){return ctag(t,'b');}).join('') + '<br><br>' +
+      '<strong>🔒 Security:</strong><br>' +
+      ['Spring Security','BCrypt','PBKDF2','RBAC Filters','HMAC-SHA256','SQL Injection Prevention'].map(function(t){return ctag(t,'g');}).join('') + '<br><br>' +
+      '<strong>☁️ DevOps &amp; Tools:</strong><br>' +
+      ['Git','Docker','AWS','Azure','Maven','Postman','Linux'].map(function(t){return ctag(t);}).join('') + '<br><br>' +
+      '<strong>🎨 Frontend:</strong><br>' +
+      ['React.js','JavaScript ES6+','HTML5','CSS3'].map(function(t){return ctag(t,'c');}).join('');
+  },
+
+  powerlevel: function() {
+    return 'Ram\'s <strong>self-assessed skill power levels:</strong><br><br>' +
+      cbar('Java 17', 90) +
+      cbar('Spring Boot', 85) +
+      cbar('MySQL 8', 85) +
+      cbar('REST API Design', 85) +
+      cbar('Hibernate ORM', 80) +
+      cbar('Git & GitHub', 88) +
+      cbar('React.js', 70) +
+      cbar('AWS / Azure', 72) +
+      cbar('Docker', 65) +
+      cbar('Spring Security', 75);
+  },
+
+  experience: function() {
+    return ccard('Java Full Stack Trainee Developer','<strong>Kiran Academy</strong> · Pune · Dec 2025 – Jun 2026 · 7 months') + '<br>' +
+      '<strong>Detailed Responsibilities:</strong>' +
+      clist([
+        'Designed and built RESTful APIs with Java &amp; Spring Boot for core industrial project features.',
+        'Created database schemas and CRUD operations using <strong>Hibernate ORM + MySQL</strong>.',
+        'Integrated Spring Boot backend with React.js frontend for seamless data flow.',
+        'Maintained all code using <strong>Git version control</strong> and Maven build management.',
+        'Debugged and optimised API endpoints for performance under concurrent load.',
+        'Applied agile-style iterative development with team collaboration.'
+      ]);
+  },
+
+  projects_all: function() {
+    return 'Ram has built <strong>2 production-grade systems:</strong><br><br>' +
+      ccard('🛡️ Fake Profile ID & Reporting System', 'Oct 2025 – Dec 2025 · Full Stack + ML<br>Spring Boot + Python Random Forest + Spring Security + MySQL + React.js') +
+      ccard('📚 Online Bookstore Engine', 'Mar 2026 – May 2026 · Framework-less E-Commerce<br>Core Java 17 + Servlet API + JDBC + MySQL 8 + Razorpay') + '<br>' +
+      'Ask me to <strong>deep-dive into either project</strong> for full architecture, security, and feature details!';
+  },
+
+  project_fake: function() {
+    return '<strong>🛡️ Fake Profile Identification &amp; Reporting System</strong> <em>(Oct 2025 – Dec 2025)</em><br><br>' +
+      '<strong>Problem:</strong> Social media platforms suffer from fake accounts that mislead users. This system automatically detects and reports them using ML.<br><br>' +
+      '<strong>Architecture:</strong> React.js frontend → Spring Boot REST API → MySQL database, with a Python ML sidecar.<br><br>' +
+      ccard('Tech Stack','Java · Spring Boot · Hibernate ORM · MySQL · React.js · Spring Security · Python') + '<br>' +
+      '<strong>Key Features:</strong>' +
+      clist([
+        'REST API following strict <strong>MVC architecture</strong> with Controller → Service → Repository layers.',
+        'Python <strong>Random Forest</strong> ML model invoked in real-time via Java <strong>ProcessBuilder</strong>.',
+        'Feature extraction from profile data serialised as JSON and passed via stdin to Python.',
+        '<strong>Spring Security + BCrypt</strong> for user registration, login, and role-based access.',
+        'React.js admin dashboard for reviewing and managing flagged profiles.',
+        '<strong>IEEE I2ITCON 2025</strong> publication validated + Indian Copyright registered.'
+      ]);
+  },
+
+  project_book: function() {
+    return '<strong>📚 Online Bookstore Engine</strong> <em>(Mar 2026 – May 2026)</em><br><br>' +
+      '<strong>Challenge:</strong> Build a production e-commerce platform using ONLY Core Java — no Spring, no ORM — to prove deep Java expertise.<br><br>' +
+      '<strong>Architecture:</strong> Vanilla JS frontend → Java Servlet routing → JDBC data layer → MySQL 8.<br><br>' +
+      ccard('Tech Stack','Java 17 · Servlet API · JDBC · MySQL 8 · Vanilla JS · Razorpay API') + '<br>' +
+      '<strong>Key Features:</strong>' +
+      clist([
+        '100% framework-less — Core Java 17 + Servlets + raw JDBC. No Spring anywhere.',
+        'Normalised MySQL 8 DB with foreign keys, cascades, and <strong>ACID-compliant</strong> checkout transactions.',
+        '<strong>PBKDF2-HMAC-SHA256</strong> password hashing — stronger than BCrypt in raw Java environments.',
+        '<strong>SQL Injection prevented</strong> via 100% PreparedStatements throughout the codebase.',
+        '<strong>RBAC Servlet Filters</strong> for role-based routing (admin vs customer).',
+        '<strong>Razorpay</strong> payment gateway with HMAC-SHA256 signature verification for fraud prevention.',
+        'Full order lifecycle: cart → checkout → payment → confirmation → inventory update.'
+      ]);
+  },
+
+  mlintegration: function() {
+    return '🤖 One of Ram\'s standout skills: <strong>integrating Python ML into a Java Spring Boot app.</strong><br><br>' +
+      '<strong>Step-by-step how it works:</strong>' +
+      clist([
+        '<strong>Feature Extraction:</strong> Spring Boot reads a social media profile and extracts features (follower count, post count, bio length, account age, etc.).',
+        '<strong>JSON Serialisation:</strong> Features serialised as a JSON string to pass as input.',
+        '<strong>Java ProcessBuilder:</strong> Spring Boot spawns a Python subprocess, passing the JSON via stdin.',
+        '<strong>Python Script:</strong> Pre-trained Random Forest classifier reads input, runs inference, writes result (FAKE/REAL + confidence %) to stdout.',
+        '<strong>Result Parsing:</strong> Java reads stdout, parses classification result, stores in MySQL.',
+        '<strong>API Response:</strong> Result returned to frontend in under 1 second.'
+      ]) + '<br>' +
+      ctag('ProcessBuilder','b') + ' ' + ctag('Random Forest','r') + ' ' + ctag('Real-time ML','g') + ' ' + ctag('Python-Java Bridge','c');
+  },
+
+  security: function() {
+    return '🔒 Ram has <strong>deep, hands-on security implementation experience:</strong><br><br>' +
+      ccard('Spring Security + BCrypt','Used in Fake Profile system. Handles auth filters, user detail loading, BCrypt password encoding with configurable salt rounds.') +
+      ccard('PBKDF2-HMAC-SHA256','Used in Bookstore (raw Java). Implemented manually with Java SecretKeyFactory — stronger than BCrypt in a no-Spring environment.') +
+      ccard('SQL Injection Prevention','ALL database queries use PreparedStatements. Zero string concatenation in SQL across both projects.') +
+      ccard('RBAC Filters','Servlet Filters in Bookstore restrict admin routes. Spring Security roles in Fake Profile system.') +
+      ccard('Razorpay HMAC-SHA256','Payment callbacks verified server-side by recomputing HMAC from payment_id + order_id. Any tampered signature is rejected.');
+  },
+
+  certifications: function() {
+    return 'Ram holds <strong>2 professional certifications + 1 IEEE publication:</strong><br><br>' +
+      ccard('Cloud Computing Engineering (Azure / AWS)','NASSCOM · <strong>Gold Category · Score: 97.00%</strong> · Jun 2026') + '<br>' +
+      '<em>Topics:</em> ' + ['AWS EC2, S3, RDS, Lambda','Azure VM, App Service, Blob Storage','Cloud Architecture','Microservices on Cloud'].map(function(t){return ctag(t,'b');}).join('') + '<br><br>' +
+      ccard('Java Programming','IIT Bombay (Spoken Tutorial) · <strong>Distinction · Score: 82.50%</strong> · Feb 2024') + '<br>' +
+      '<em>Topics:</em> ' + ['Core Java Fundamentals','OOP (Inheritance, Polymorphism)','Exception Handling','Collections Framework'].map(function(t){return ctag(t,'c');}).join('') + '<br><br>' +
+      ccard('IEEE Publication','Fake Profile ID &amp; Reporting · IEEE I2ITCON · Pune (Jun 2025) · Peer-reviewed · Indian Copyright registered');
+  },
+
+  publication: function() {
+    return '📄 <strong>Ram is an IEEE-published researcher!</strong><br><br>' +
+      ccard('"Fake Profile Identification and Reporting"','IEEE International Conference (I2ITCON) · Pune, India · Jun 2025 · Available on IEEE Xplore') + '<br>' +
+      '<strong>Abstract:</strong> Presents an automated system for detecting fake social media profiles using a Random Forest classifier. A Python ML pipeline is integrated with a Java Spring Boot backend to classify profiles in real-time.<br><br>' +
+      '<strong>Outcomes:</strong>' +
+      clist([
+        'Peer-reviewed and accepted at IEEE I2ITCON (Jun 2025)',
+        'System awarded an official <strong>Indian Copyright registration</strong>',
+        'Demonstrates a novel cross-language ML + Java integration pattern using ProcessBuilder'
+      ]);
+  },
+
+  hire: function() {
+    return '✅ <strong>Ram is ACTIVELY AVAILABLE for opportunities!</strong><br><br>' +
+      '<strong>Seeking roles as:</strong><br>' +
+      ['Java Backend Developer','Java Full Stack Developer','Spring Boot Developer','Junior Software Engineer'].map(function(t){return ctag(t,'r');}).join('') + '<br><br>' +
+      '<strong>What he brings to the team:</strong>' +
+      clist([
+        'Production REST API development with Spring Boot + Hibernate',
+        'Robust MySQL database design (normalisation, ACID, indexing)',
+        'Security-first: Spring Security, BCrypt, PBKDF2, RBAC, HMAC',
+        'IEEE-published research with ML + Java ProcessBuilder integration',
+        'Framework-less Java expertise (Servlets, JDBC) proving deep knowledge',
+        'Razorpay payment gateway with cryptographic verification',
+        'Cloud-certified (NASSCOM Gold): AWS &amp; Azure (97% score)'
+      ]) + '<br>' +
+      ccard('📬 Contact','Email: <strong>rampawarpkd@gmail.com</strong><br>Phone: <strong>+91 9209295876</strong><br>LinkedIn: linkedin.com/in/ramvijaypawar');
+  },
+
+  contact: function() {
+    return '📬 <strong>How to reach Ram Pawar:</strong><br><br>' +
+      ccard('Email','rampawarpkd@gmail.com') +
+      ccard('Phone','+91 9209295876') +
+      ccard('LinkedIn','linkedin.com/in/ramvijaypawar') +
+      ccard('GitHub','github.com/Rampawardz') +
+      ccard('Portfolio Website','rampawar.onrender.com') +
+      ccard('Location','Pune, Maharashtra, India');
+  },
+
+  education: function() {
+    return '🎓 <strong>Education:</strong><br><br>' +
+      ccard('B.Tech in Computer Engineering','JSPM\'s Rajarshi Shahu College of Engineering, Pune<br>Savitribai Phule Pune University<br>Nov 2022 – Jun 2026 · CGPA: <strong>7.53 / 10.0</strong>') + '<br>' +
+      '<strong>Focus Areas:</strong><br>' +
+      ['OOP','Data Structures','DBMS','Operating Systems','Computer Networks','Software Engineering'].map(function(t){return ctag(t);}).join('');
+  },
+
+  payment: function() {
+    return '💳 <strong>Razorpay Payment Gateway Integration (Bookstore Project):</strong><br><br>' +
+      clist([
+        '<strong>Server-side Order Creation:</strong> Java HTTP client calls Razorpay Orders API to create an order_id before checkout begins.',
+        '<strong>Frontend Checkout:</strong> order_id passed to Razorpay Checkout.js to trigger the payment UI.',
+        '<strong>HMAC-SHA256 Verification:</strong> On payment callback, server recomputes HMAC(payment_id + \'|\' + order_id) using the Razorpay secret key and compares to the Razorpay-provided signature.',
+        '<strong>Order Confirmation:</strong> Only after HMAC verification passes does the system mark the order paid, update inventory, and send confirmation.',
+        '<strong>Fraud Prevention:</strong> Any tampered callback signature is rejected before any data is written.'
+      ]) + '<br>' +
+      ctag('Razorpay API','r') + ' ' + ctag('HMAC-SHA256','g') + ' ' + ctag('Fraud Prevention','b') + ' ' + ctag('Java HTTP Client','c');
+  },
+
+  devops: function() {
+    return '☁️ <strong>Ram\'s DevOps &amp; Cloud Toolkit:</strong><br><br>' +
+      clist([
+        '<strong>Git &amp; GitHub</strong> — Full version control workflow. Branch management, commits, pull requests across all projects.',
+        '<strong>Docker</strong> — Containerisation knowledge. Familiar with Dockerfiles and docker-compose.',
+        '<strong>AWS</strong> — Certified (NASSCOM Gold 97%). Covers EC2, S3, RDS, Lambda, IAM, VPC.',
+        '<strong>Azure</strong> — Certified (NASSCOM Gold 97%). Covers Azure VM, App Service, Blob Storage, Azure Functions.',
+        '<strong>Maven</strong> — Standard build tool for all Spring Boot projects.',
+        '<strong>Postman</strong> — Extensive API testing and request collections.',
+        '<strong>Linux</strong> — CLI proficiency for server operations and environment setup.'
+      ]) + '<br>' +
+      ctag('NASSCOM Cloud Cert','g') + ' ' + ctag('Gold · 97%','r');
+  },
+
+  location: function() {
+    return '📍 Ram is based in <strong>Pune, Maharashtra, India.</strong><br><br>' +
+      '<strong>Work Preferences:</strong>' +
+      clist([
+        'On-site roles in Pune and nearby areas',
+        'Remote positions — pan-India or globally',
+        'Hybrid work arrangements',
+        'Relocation possible for the right opportunity'
+      ]) + '<br>' +
+      'He is a <strong>fresh B.Tech graduate (Jun 2026)</strong> and can join immediately.';
+  },
+
+  summary: function() {
+    return '<strong>Ram Pawar — Java Full Stack / Backend Developer</strong><br>📍 Pune, India · Jun 2026 Graduate<br><br>' +
+      clist([
+        'B.Tech Computer Engineering · JSPM\'s RSCOE · CGPA 7.53',
+        '7 months Java Full Stack Training at Kiran Academy',
+        '2 production-grade projects: ML + REST API · Framework-less E-commerce',
+        'IEEE-published researcher · Indian Copyright holder',
+        'NASSCOM Gold Cloud Cert (97%) · IIT Bombay Java Cert (82.5%)',
+        'Actively seeking Java Backend / Full Stack roles'
+      ]) + '<br>' +
+      ctag('✅ Available','g') + ' ' + ctag('Java','r') + ' ' + ctag('Spring Boot','r') + ' ' + ctag('MySQL','b') + ' ' + ctag('IEEE Published','c');
+  },
+
+  fallback: function(q) {
+    return '😅 Hmm, I couldn\'t match: <em>"' + q + '"</em><br><br>' +
+      'Try asking about:<br>' +
+      ['Skills','Projects','ML Integration','Security','Experience','Education','Certifications','IEEE Paper','Hiring Status','DevOps','Payment Gateway','Contact'].map(function(t){return ctag(t,'b');}).join(' ');
+  }
+};
+
+/* ─── NLP Intent Engine ─── */
+var INTENTS = [
+  { kw:['hi','hello','hey','sup','yo','howdy','hii','greetings','namaste'],                                                                        fn:'greeting'     },
+  { kw:['all skills','tech stack','technologies','expertise','capabilities','what can he do','everything','skill set','complete skills'],           fn:'skills'       },
+  { kw:['power level','proficiency','percentage','how good','rating','skill level','how skilled','bar','chart'],                                   fn:'powerlevel'   },
+  { kw:['experience','work','worked','job','company','kiran','training','trainee','career','intern','responsibilities','position','employment'],    fn:'experience'   },
+  { kw:['both project','all project','what project','show project','projects','built','created','developed','implementations'],                    fn:'projects_all' },
+  { kw:['fake profile','fake','fake account','social media detection','fake project','detection system','shield','ieee project','ml project'],     fn:'project_fake' },
+  { kw:['bookstore','book','ecommerce','e-commerce','online store','razorpay project','servlet project','jdbc project','shop','shopping'],         fn:'project_book' },
+  { kw:['machine learning','ml','random forest','processbuilder','python','ai model','classification','how integrate','ml integration'],           fn:'mlintegration' },
+  { kw:['security','secure','bcrypt','pbkdf2','authentication','authorization','rbac','spring security','hashing','injection','protection'],       fn:'security'     },
+  { kw:['certification','certified','nasscom','iit bombay','cloud cert','java cert','credential','aws cert','azure cert'],                        fn:'certifications'},
+  { kw:['publication','ieee','research','paper','conference','i2itcon','copyright','journal','research paper'],                                   fn:'publication'  },
+  { kw:['hire','available','open to work','seeking','opportunity','employ','recruit','onboard','when start','looking for job','should hire'],      fn:'hire'         },
+  { kw:['contact','email','phone','reach','get in touch','linkedin','github','website','portfolio link'],                                         fn:'contact'      },
+  { kw:['education','college','degree','btech','cgpa','university','academic','jspm','rscoe','engineering degree'],                              fn:'education'    },
+  { kw:['payment','razorpay','gateway','hmac','checkout','transaction','money','pay'],                                                            fn:'payment'      },
+  { kw:['devops','docker','aws','azure','cloud','git','maven','linux','container','infrastructure'],                                              fn:'devops'       },
+  { kw:['location','where','city','pune','india','based','remote','onsite','hybrid','relocate','work from'],                                      fn:'location'     },
+  { kw:['who is','summary','overview','about','introduce','profile','tell me about ram'],                                                         fn:'summary'      },
+  { kw:['java','spring','backend','spring boot','api'],                                                                                           fn:'skills'       }
+];
+
+function matchIntent(raw) {
+  var q = raw.toLowerCase().trim();
+  var best = null, bestScore = 0;
+
+  for (var i = 0; i < INTENTS.length; i++) {
+    var intent = INTENTS[i];
+    var score = 0;
+    for (var j = 0; j < intent.kw.length; j++) {
+      var kw = intent.kw[j];
+      if (q === kw) { score += 20; break; }
+      if (q.indexOf(kw) !== -1) {
+        score += kw.split(' ').length * 3;
+      } else {
+        var words = kw.split(' ');
+        for (var k = 0; k < words.length; k++) {
+          if (words[k].length > 3 && q.indexOf(words[k]) !== -1) score += 1;
+        }
+      }
+    }
+    if (score > bestScore) { bestScore = score; best = intent; }
+  }
+
+  if (best && bestScore >= 2) {
+    try { return I[best.fn](); }
+    catch(e) { return I.fallback(raw); }
+  }
+  return I.fallback(raw);
+}
+
+/* ─── Chat UI ─── */
+var msgsEl = document.getElementById('chat-messages');
+var busy = false;
+
+function addMsg(role, html) {
+  var isUser = role === 'user';
+  var d = document.createElement('div');
+  d.className = 'chat-msg' + (isUser ? ' user-msg' : '');
+  d.innerHTML =
+    '<div class="chat-ava ' + (isUser ? 'user' : 'agent') + '">' + (isUser ? '🧑' : '🤖') + '</div>' +
+    '<div class="chat-bubble-wrap">' +
+      '<div class="chat-sender">' + (isUser ? 'YOU' : 'RAM-AGENT') + ' · ' + getTime() + '</div>' +
+      '<div class="chat-bubble">' + html + '</div>' +
+    '</div>';
+  msgsEl.appendChild(d);
+
+  // Animate cbar-fills inside this message
+  setTimeout(function() {
+    var bars = d.querySelectorAll('.cbar-fill');
+    for (var i = 0; i < bars.length; i++) {
+      bars[i].style.width = bars[i].getAttribute('data-w') + '%';
+    }
+    msgsEl.scrollTop = msgsEl.scrollHeight;
+  }, 80);
+}
+
+function addTyping() {
+  var d = document.createElement('div');
+  d.className = 'typing-msg'; d.id = 'typing';
+  d.innerHTML =
+    '<div class="chat-ava agent">🤖</div>' +
+    '<div class="typing-bubble"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div>';
+  msgsEl.appendChild(d);
+  msgsEl.scrollTop = msgsEl.scrollHeight;
+}
+
+function removeTyping() {
+  var t = document.getElementById('typing');
+  if (t) t.remove();
+}
+
+function handleSend() {
+  if (busy) return;
+  var inp = document.getElementById('chat-input');
+  var text = inp.value.trim();
+  if (!text) return;
+  inp.value = '';
+
+  var chips = document.getElementById('chips-row');
+  if (chips) chips.style.display = 'none';
+
+  addMsg('user', text);
+  busy = true;
+  document.getElementById('send-btn').disabled = true;
+  addTyping();
+
+  var delay = 700 + Math.random() * 900;
+  setTimeout(function() {
+    removeTyping();
+    var resp = matchIntent(text);
+    addMsg('ai', resp);
+    busy = false;
+    document.getElementById('send-btn').disabled = false;
+  }, delay);
+}
+
+function chipQ(el) {
+  var text = (el.innerText || el.textContent || '').trim();
+  document.getElementById('chat-input').value = text;
+  handleSend();
+}
+
+function clearChat() {
+  msgsEl.innerHTML = '';
+  var chips = document.getElementById('chips-row');
+  if (chips) chips.style.display = 'flex';
+  addMsg('ai', I.greeting());
+}
+
+// Keyboard
+document.getElementById('chat-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }
+});
+
+// Init chat
+addMsg('ai', I.greeting());
+
+/* ─── Scroll Reveal ─── */
+var revealObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(function(el) { revealObs.observe(el); });
+
+/* ─── Power Bar Animations (static sections) ─── */
+var barObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) {
+      var bars = e.target.querySelectorAll('.power-bar-fill[data-w]');
+      bars.forEach(function(bar) {
+        // Small delay to let CSS transition engage after width:0% is set via default CSS
+        setTimeout(function() { bar.style.width = bar.getAttribute('data-w') + '%'; }, 120);
+      });
+      barObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.skills-panel').forEach(function(el) { barObs.observe(el); });
+</script>
+</body>
+</html>
